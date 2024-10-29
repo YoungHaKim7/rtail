@@ -38,19 +38,19 @@ enum ParsingStyle {
 }
 
 impl Default for Options {
-    fn default() -> Self {
-        Options {
-            grps: Vec::new(),
-            parsing_style: ParsingStyle::FloatingFrees,
-            long_only: false,
-        }
+    fn default() -> Options {
+        Self::new()
     }
 }
 
 impl Options {
     /// Creates a new [`Options`].
     pub fn new() -> Options {
-        Self::new()
+        Options {
+            grps: Vec::new(),
+            parsing_style: ParsingStyle::FloatingFrees,
+            long_only: false,
+        }
     }
 
     fn optopt(
