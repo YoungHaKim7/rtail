@@ -52,10 +52,45 @@ impl Options {
     pub fn new() -> Options {
         Self::new()
     }
+
+    fn optopt(
+        &mut self,
+        short_name: &str,
+        long_name: &str,
+        desc: &str,
+        hint: &str,
+    ) -> &mut Options {
+        validate_names(short_name, long_name);
+        self.grps.push(OptGroup {
+            short_name: short_name.to_string(),
+            long_name: long_name.to_string(),
+            hint: hint.to_string(),
+            desc: desc.to_string(),
+            hasarg: HasArg::Yes,
+            occur: Occur::Req,
+        });
+        self
+    }
+}
+
+fn validate_names(short_name: &str, long_name: &str) {
+    let len = short_name.len();
+    assert!(
+        len == 1 || len == 0,
+        "the short_name (first argument) should be a single character, \
+        or an empty string for none"
+    );
+    let len = long_name.len();
+    assert!(
+        len == 0 || len > 1,
+        "the long_name (second argument) should be longer than a single \
+         character, or an empty string for none"
+    );
 }
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let program = args[0].clone();
     let mut options = Options::new();
+    options.optopt("n", "", "number of lines", "NUMS");
 }
