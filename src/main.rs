@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, f32::consts::LOG10_2};
 
 #[derive(Debug)]
 struct Options {
@@ -71,6 +71,19 @@ impl Options {
         });
         self
     }
+
+    fn optflag(&mut self, short_name: &str, long_name: &str, desc: &str) -> &mut Options {
+        validate_names(short_name, long_name);
+        self.grps.push(OptGroup {
+            short_name: short_name.to_string(),
+            long_name: long_name.to_string(),
+            hint: "".to_string(),
+            desc: desc.to_string(),
+            hasarg: HasArg::No,
+            occur: Occur::Optional,
+        });
+        self
+    }
 }
 
 fn validate_names(short_name: &str, long_name: &str) {
@@ -93,4 +106,5 @@ fn main() {
     let program = args[0].clone();
     let mut options = Options::new();
     options.optopt("n", "", "number of lines", "NUMS");
+    options.optflag("f", "-follow", "output appended data as the file grows");
 }
