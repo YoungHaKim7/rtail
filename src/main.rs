@@ -1,4 +1,9 @@
-use std::{env, f32::consts::LOG10_2};
+use core::panic;
+use std::{env, ffi::OsStr};
+
+mod result_error;
+
+use crate::result_error::Result;
 
 #[derive(Debug)]
 struct Options {
@@ -29,6 +34,11 @@ enum Occur {
     Req,
     Optional,
     Multi,
+}
+
+enum Name {
+    Long(String),
+    Short(char),
 }
 
 #[derive(Debug)]
@@ -84,6 +94,14 @@ impl Options {
         });
         self
     }
+
+    fn parse<C>(&self, args: C) -> Result
+    where
+        C: IntoIterator,
+        C::Item: AsRef<OsStr>,
+    {
+        todo!()
+    }
 }
 
 fn validate_names(short_name: &str, long_name: &str) {
@@ -107,4 +125,9 @@ fn main() {
     let mut options = Options::new();
     options.optopt("n", "", "number of lines", "NUMS");
     options.optflag("f", "-follow", "output appended data as the file grows");
+    options.optflag("h", "", "print help");
+    let cmd_args = match options.parse(&args[1..]) {
+        Err(e) => panic!("Cannot parse command args : {:?}", e),
+        Ok(ok) => ok,
+    };
 }
