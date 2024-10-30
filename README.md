@@ -1,3 +1,7 @@
+# Rust Version 1.82
+
+<hr />
+
 # rust_tail
 - https://github.com/17g/rtail
 
