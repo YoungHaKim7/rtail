@@ -1,4 +1,5 @@
 use std::process;
+use unicode_width::UnicodeWidthStr;
 
 use crate::{arg_options::Options, optgroup::Name, result_error::Opt};
 
@@ -42,4 +43,51 @@ pub fn print_usage(program: &str, options: &Options) {
     let brief = format!("Usage: {} [options] FILE", program);
     print!("{}", options.usage(&brief));
     process::exit(0);
+}
+
+pub fn each_split_within(desc: &str, lim: usize) -> Vec<String> {
+    let mut rows = Vec::new();
+    for line in desc.trim().lines() {
+        let line_chars = line.chars().chain(Some(' '));
+        let words = line_chars
+            .fold((Vec::new(), 0, 0), |(mut words, a, z), c| {
+                let idx = z + c.len_utf8(); // Get the current byte offset
+
+                // If the char is whitespace, advance the word start and maybe push a word
+                if c.is_whitespace() {
+                    if a != z {
+                        words.push(&line[a..z]);
+                    }
+                    (words, idx, idx)
+                }
+                // If the char is not whitespace, continue, retaining the current
+                else {
+                    (words, a, idx)
+                }
+            })
+            .0;
+
+        let mut row = String::new();
+        for word in words.iter() {
+            let sep = if !row.is_empty() { Some(" ") } else { None };
+            let width = row.width() + word.width() + sep.map(UnicodeWidthStr::width).unwrap_or(0);
+
+            if width <= lim {
+                if let Some(sep) = sep {
+                    row.push_str(sep)
+                }
+                row.push_str(word);
+                continue;
+            }
+            if !row.is_empty() {
+                rows.push(row.clone());
+                row.clear();
+            }
+            row.push_str(word);
+        }
+        if !row.is_empty() {
+            rows.push(row);
+        }
+    }
+    rows
 }

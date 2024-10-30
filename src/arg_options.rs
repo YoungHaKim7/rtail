@@ -1,12 +1,12 @@
 use std::{ffi::OsStr, iter::repeat};
+use unicode_width::UnicodeWidthStr;
 
 use result_error::{Fail, Matches, Opt, Optval};
 
 use crate::{
-    global_fn,
+    global_fn::{self, each_split_within},
     optgroup::{HasArg, Name, Occur, OptGroup, ParsingStyle},
     result_error::{self, Result},
-    unicode_width::unicode_width::UnicodeWidthStr,
 };
 
 use global_fn::{find_opt, is_arg, validate_names};
@@ -293,9 +293,9 @@ impl Options {
 
             // arg
             match hasarg {
-                No => {}
-                Yes => row.push_str(&hint),
-                Maybe => {
+                HasArg::No => {}
+                HasArg::Yes => row.push_str(&hint),
+                HasArg::Maybe => {
                     row.push('[');
                     row.push_str(&hint);
                     row.push(']');

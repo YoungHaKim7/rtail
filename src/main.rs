@@ -7,7 +7,6 @@ mod arg_options;
 mod global_fn;
 mod optgroup;
 mod result_error;
-mod unicode_width;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
