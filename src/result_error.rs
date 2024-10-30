@@ -1,6 +1,6 @@
 use std::{error::Error, fmt, result};
 
-use crate::{HasArg, Name, Occur};
+use crate::optgroup::{HasArg, Name, Occur};
 
 pub type Result = result::Result<Matches, Fail>;
 
