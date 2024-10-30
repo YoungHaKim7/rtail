@@ -6,15 +6,15 @@ pub type Result = result::Result<Matches, Fail>;
 
 pub struct Matches {
     /// Options that matched
-    opts: Vec<Opt>,
+    pub opts: Vec<Opt>,
     /// Values of the Options that matched and their positions
-    vals: Vec<Vec<(usize, Optval)>>,
+    pub vals: Vec<Vec<(usize, Optval)>>,
 
     /// Free string fragments
     pub free: Vec<String>,
 
     /// Index of first free fragment after "--" separator
-    args_end: Option<usize>,
+    pub args_end: Option<usize>,
 }
 
 #[derive(Clone, Debug)]

@@ -37,7 +37,7 @@ enum Occur {
     Multi,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum Name {
     Long(String),
     Short(char),
@@ -47,6 +47,11 @@ pub enum Name {
 enum ParsingStyle {
     FloatingFrees,
     StopAtFirstFree,
+}
+impl ParsingStyle {
+    fn clone(&self) -> ParsingStyle {
+        todo!()
+    }
 }
 
 impl Default for Options {
@@ -266,6 +271,14 @@ impl Options {
             args_end,
         })
     }
+
+    fn clone(&self) -> Self {
+        Options {
+            grps: self.grps.clone(),
+            parsing_style: self.parsing_style.clone(),
+            long_only: self.long_only,
+        }
+    }
 }
 
 impl OptGroup {
@@ -294,12 +307,12 @@ impl OptGroup {
             },
             (1, _) => Opt {
                 name: Name::Long(long_name),
-                hasarg,
-                occur,
+                hasarg: hasarg.clone(),
+                occur: occur.clone(),
                 aliases: vec![Opt {
                     name: Name::Short(short_name.as_bytes()[0] as char),
-                    hasarg: hasarg,
-                    occur: occur,
+                    hasarg: hasarg.clone(),
+                    occur: occur.clone(),
                     aliases: Vec::new(),
                 }],
             },
@@ -307,8 +320,24 @@ impl OptGroup {
         }
     }
 
-    fn clone(&self) -> OptGroup {
-        todo!()
+    fn clone(&self) -> Self {
+        OptGroup {
+            short_name: self.short_name.clone(),
+            long_name: self.long_name.clone(),
+            hint: self.hint.clone(),
+            desc: self.desc.clone(),
+            hasarg: self.hasarg.clone(),
+            occur: self.occur.clone(),
+        }
+    }
+}
+
+impl Clone for Name {
+    fn clone(&self) -> Self {
+        match *self {
+            Name::Short(ch) => Name::Short(ch),
+            Name::Long(ref s) => Name::Long(s.clone()),
+        }
     }
 }
 
