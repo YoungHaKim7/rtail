@@ -1,18 +1,44 @@
 use std::{error::Error, fmt, result};
 
-use crate::{HasArg, Name};
+use crate::{HasArg, Name, Occur};
 
 pub type Result = result::Result<Matches, Fail>;
 
 pub struct Matches {
+    /// Options that matched
     opts: Vec<Opt>,
-    val: Vec<Vec<(usize, Optval)>>,
+    /// Values of the Options that matched and their positions
+    vals: Vec<Vec<(usize, Optval)>>,
+
+    /// Free string fragments
+    pub free: Vec<String>,
+
+    /// Index of first free fragment after "--" separator
+    args_end: Option<usize>,
 }
 
-struct Opt {
-    name: Name,
-    hasarg: HasArg,
+#[derive(Clone, Debug)]
+pub struct Opt {
+    /// Name of the option
+    pub name: Name,
+    /// Whether it has an argument
+    pub hasarg: HasArg,
+    /// How often it can occur
+    pub occur: Occur,
+    /// Which options it aliases
+    pub aliases: Vec<Opt>,
 }
+
+// impl Clone for Opt {
+//     fn clone(&self) -> Self {
+//         Opt {
+//             name: self.name.clone(),
+//             hasarg: self.hasarg.clone(),
+//             occur: self.occur.clone(),
+//             aliases: self.aliases.clone(),
+//         }
+//     }
+// }
 
 #[derive(Debug)]
 pub enum Fail {
@@ -23,7 +49,7 @@ pub enum Fail {
     UnexpectedArgument(String),
 }
 
-enum Optval {
+pub enum Optval {
     Val(String),
     Given,
 }
