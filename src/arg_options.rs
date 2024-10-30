@@ -1,4 +1,4 @@
-use std::ffi::OsStr;
+use std::{ffi::OsStr, iter::repeat};
 
 use result_error::{Fail, Matches, Opt, Optval};
 
@@ -6,6 +6,7 @@ use crate::{
     global_fn,
     optgroup::{HasArg, Name, Occur, OptGroup, ParsingStyle},
     result_error::{self, Result},
+    unicode_width::unicode_width::UnicodeWidthStr,
 };
 
 use global_fn::{find_opt, is_arg, validate_names};
@@ -220,5 +221,102 @@ impl Options {
             parsing_style: self.parsing_style.clone(),
             long_only: self.long_only,
         }
+    }
+    /// Derive a formatted message from a set of options.
+    pub fn usage(&self, brief: &str) -> String {
+        self.usage_with_format(|opts| {
+            format!(
+                "{}\n\nOptions:\n{}\n",
+                brief,
+                opts.collect::<Vec<String>>().join("\n")
+            )
+        })
+    }
+    /// Derive a custom formatted message from a set of options. The formatted options provided to
+    /// a closure as an iterator.
+    pub fn usage_with_format<F: FnMut(&mut dyn Iterator<Item = String>) -> String>(
+        &self,
+        mut formatter: F,
+    ) -> String {
+        formatter(&mut self.usage_items())
+    }
+
+    /// Derive usage items from a set of options.
+    fn usage_items<'a>(&'a self) -> Box<dyn Iterator<Item = String> + 'a> {
+        let desc_sep = format!("\n{}", repeat(" ").take(24).collect::<String>());
+
+        let any_short = self.grps.iter().any(|optref| !optref.short_name.is_empty());
+
+        let rows = self.grps.iter().map(move |optref| {
+            let OptGroup {
+                short_name,
+                long_name,
+                hint,
+                desc,
+                hasarg,
+                ..
+            } = (*optref).clone();
+
+            let mut row = "    ".to_string();
+
+            // short option
+            match short_name.width() {
+                0 => {
+                    if any_short {
+                        row.push_str("    ");
+                    }
+                }
+                1 => {
+                    row.push('-');
+                    row.push_str(&short_name);
+                    if long_name.width() > 0 {
+                        row.push_str(", ");
+                    } else {
+                        // Only a single space here, so that any
+                        // argument is printed in the correct spot.
+                        row.push(' ');
+                    }
+                }
+                // FIXME: refer issue #7.
+                _ => panic!("the short name should only be 1 ascii char long"),
+            }
+
+            // long option
+            match long_name.width() {
+                0 => {}
+                _ => {
+                    row.push_str(if self.long_only { "-" } else { "--" });
+                    row.push_str(&long_name);
+                    row.push(' ');
+                }
+            }
+
+            // arg
+            match hasarg {
+                No => {}
+                Yes => row.push_str(&hint),
+                Maybe => {
+                    row.push('[');
+                    row.push_str(&hint);
+                    row.push(']');
+                }
+            }
+
+            let rowlen = row.width();
+            if rowlen < 24 {
+                for _ in 0..24 - rowlen {
+                    row.push(' ');
+                }
+            } else {
+                row.push_str(&desc_sep)
+            }
+
+            let desc_rows = each_split_within(&desc, 54);
+            row.push_str(&desc_rows.join(&desc_sep));
+
+            row
+        });
+
+        Box::new(rows)
     }
 }

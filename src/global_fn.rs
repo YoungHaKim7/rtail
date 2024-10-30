@@ -1,4 +1,6 @@
-use crate::{optgroup::Name, result_error::Opt};
+use std::process;
+
+use crate::{arg_options::Options, optgroup::Name, result_error::Opt};
 
 pub fn validate_names(short_name: &str, long_name: &str) {
     let len = short_name.len();
@@ -34,4 +36,10 @@ pub fn find_opt(opts: &[Opt], nm: &Name) -> Option<usize> {
     }
 
     None
+}
+
+pub fn print_usage(program: &str, options: &Options) {
+    let brief = format!("Usage: {} [options] FILE", program);
+    print!("{}", options.usage(&brief));
+    process::exit(0);
 }

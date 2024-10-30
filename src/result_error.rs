@@ -1,6 +1,9 @@
 use std::{error::Error, fmt, result};
 
-use crate::optgroup::{HasArg, Name, Occur};
+use crate::{
+    global_fn::find_opt,
+    optgroup::{HasArg, Name, Occur},
+};
 
 pub type Result = result::Result<Matches, Fail>;
 
@@ -49,6 +52,7 @@ pub enum Fail {
     UnexpectedArgument(String),
 }
 
+#[derive(Clone)]
 pub enum Optval {
     Val(String),
     Given,
@@ -79,6 +83,26 @@ impl fmt::Display for Fail {
             OptionMissing(ref nm) => write!(f, "Required option '{}' missing", *nm),
             OptionDuplicated(ref nm) => write!(f, "Option '{}' given more than once", *nm),
             UnexpectedArgument(ref nm) => write!(f, "Option '{}' does not take an argument", *nm),
+        }
+    }
+}
+
+impl Matches {
+    fn opt_vals(&self, nm: &str) -> Vec<(usize, Optval)> {
+        match find_opt(&self.opts, &Name::from_str(nm)) {
+            Some(id) => self.vals[id].clone(),
+            None => panic!("No option '{}' defined", nm),
+        }
+    }
+    pub fn opt_present(&self, name: &str) -> bool {
+        !self.opt_vals(name).is_empty()
+    }
+    fn clone(&self) -> Self {
+        Matches {
+            opts: self.opts.clone(),
+            vals: self.vals.clone(),
+            free: self.free.clone(),
+            args_end: self.args_end.clone(),
         }
     }
 }
