@@ -2,6 +2,16 @@
 
 <hr />
 
+# Install
+
+```
+$ git clone https://github.com/YoungHaKim7/rtail.git
+
+$ cd rtail
+ 
+$ cargo install --path .
+```
+
 # rust_tail
 - fork
   - https://github.com/17g/rtail
