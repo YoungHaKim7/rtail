@@ -1,5 +1,5 @@
 [package]
-name = "tail_rs"
+name = "rtail"
 version = "0.1.0"
 edition = "2021"
 
