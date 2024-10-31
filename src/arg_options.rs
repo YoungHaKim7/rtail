@@ -232,6 +232,7 @@ impl Options {
         })
     }
 
+    #[allow(unused)]
     fn clone(&self) -> Self {
         Options {
             grps: self.grps.clone(),

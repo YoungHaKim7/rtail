@@ -10,6 +10,7 @@ pub struct OptGroup {
     pub occur: Occur,
 }
 
+#[allow(unused)]
 #[derive(Debug, Clone)]
 pub enum HasArg {
     Yes,
@@ -30,6 +31,7 @@ pub enum Name {
     Short(char),
 }
 
+#[allow(unused)]
 #[derive(Debug)]
 pub enum ParsingStyle {
     FloatingFrees,
@@ -41,6 +43,7 @@ impl ParsingStyle {
     }
 }
 
+#[allow(unused)]
 impl Name {
     pub fn from_str(nm: &str) -> Name {
         if nm.len() == 1 {

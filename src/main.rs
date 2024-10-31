@@ -8,6 +8,7 @@ mod global_fn;
 mod optgroup;
 mod result_error;
 
+#[allow(unused)]
 fn main() {
     let args: Vec<String> = env::args().collect();
     let program = args[0].clone();

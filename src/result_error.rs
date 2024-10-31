@@ -7,6 +7,7 @@ use crate::{
 
 pub type Result = result::Result<Matches, Fail>;
 
+#[allow(unused)]
 pub struct Matches {
     /// Options that matched
     pub opts: Vec<Opt>,
@@ -87,6 +88,7 @@ impl fmt::Display for Fail {
     }
 }
 
+#[allow(unused)]
 impl Matches {
     fn opt_vals(&self, nm: &str) -> Vec<(usize, Optval)> {
         match find_opt(&self.opts, &Name::from_str(nm)) {
