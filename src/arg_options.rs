@@ -66,6 +66,23 @@ impl Options {
         self
     }
 
+    // pub fn opt_strs(&self, name: &str) -> Vec<String> {
+    //     self.opt_vals(name)
+    //         .into_iter()
+    //         .filter_map(|(_, v)| match v {
+    //             Optval::Val(s) => Some(s),
+    //             _ => None,
+    //         })
+    //         .collect()
+    // }
+
+    // fn opt_vals(&self, nm: &str) -> Vec<(usize, Optval)> {
+    //     match find_opt(&self.opts, &Name::from_str(nm)) {
+    //         Some(id) => self.vals[id].clone(),
+    //         None => panic!("No option '{}' defined", nm),
+    //     }
+    // }
+
     pub fn parse<C>(&self, args: C) -> Result
     where
         C: IntoIterator,

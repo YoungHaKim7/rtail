@@ -97,6 +97,16 @@ impl Matches {
     pub fn opt_present(&self, name: &str) -> bool {
         !self.opt_vals(name).is_empty()
     }
+
+    pub fn opt_str(&self, name: &str) -> Option<String> {
+        match self.opt_val(name) {
+            Some(Optval::Val(s)) => Some(s),
+            _ => None,
+        }
+    }
+    fn opt_val(&self, nm: &str) -> Option<Optval> {
+        self.opt_vals(nm).into_iter().map(|(_, o)| o).next()
+    }
     fn clone(&self) -> Self {
         Matches {
             opts: self.opts.clone(),
