@@ -234,10 +234,10 @@ impl Options {
     }
     /// Derive a custom formatted message from a set of options. The formatted options provided to
     /// a closure as an iterator.
-    pub fn usage_with_format<F: FnMut(&mut dyn Iterator<Item = String>) -> String>(
-        &self,
-        mut formatter: F,
-    ) -> String {
+    pub fn usage_with_format<F>(&self, mut formatter: F) -> String
+    where
+        F: FnMut(&mut dyn Iterator<Item = String>) -> String,
+    {
         formatter(&mut self.usage_items())
     }
 
