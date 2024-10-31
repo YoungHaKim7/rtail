@@ -121,7 +121,7 @@ fn tail_file_follow(
     file_size: u64,
 ) -> notify::Result<()> {
     let config = Config::default()
-        .with_poll_interval(Duration::from_secs(2))
+        .with_poll_interval(Duration::from_secs(1))
         .with_compare_contents(true);
 
     let (tx, rx) = channel();
