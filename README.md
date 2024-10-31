@@ -21,3 +21,22 @@ $ cargo install --path .
 - https://github.com/rust-lang/getopts/blob/master/src/lib.rs#L136
 
 - https://github.com/unicode-rs/unicode-width
+
+
+# Test Result
+
+```bash
+$ cargo r -- -n 10 src/global_fn.rs 
+
+    for n in start_line..end_line {
+        result += &line_strs[n as usize][..];
+        result += "\n";
+    }
+    print_result(result);
+}
+
+fn print_result(disp_str: String) {
+    print!("{}", disp_str);
+}
+
+```
