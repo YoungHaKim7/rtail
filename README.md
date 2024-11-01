@@ -16,6 +16,9 @@ $ cargo install --path .
 - fork
   - original code https://crates.io/crates/rtail
   - github https://github.com/17g/rtail
+    - Test code.
+      - https://github.com/rust-lang/getopts/blob/master/src/tests/mod.rs 
+
   
 - https://github.com/17g/rtail/blob/master/src/main.rs
 - https://github.com/rust-lang/getopts/blob/master/src/lib.rs#L136
