@@ -21,7 +21,7 @@ pub struct Matches {
     pub args_end: Option<usize>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Opt {
     /// Name of the option
     pub name: Name,

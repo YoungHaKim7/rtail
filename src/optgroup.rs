@@ -1,6 +1,6 @@
 use crate::result_error::Opt;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct OptGroup {
     pub short_name: String,
     pub long_name: String,
@@ -11,7 +11,7 @@ pub struct OptGroup {
 }
 
 #[allow(unused)]
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HasArg {
     Yes,
     No,
@@ -25,14 +25,14 @@ pub enum Occur {
     Multi,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Name {
     Long(String),
     Short(char),
 }
 
 #[allow(unused)]
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum ParsingStyle {
     FloatingFrees,
     StopAtFirstFree,

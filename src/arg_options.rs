@@ -108,9 +108,9 @@ use crate::{
 
 use global_fn::{find_opt, is_arg, validate_names};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Options {
-    grps: Vec<OptGroup>,
+    pub grps: Vec<OptGroup>,
     parsing_style: ParsingStyle,
     long_only: bool,
 }
@@ -336,6 +336,48 @@ impl Options {
             parsing_style: self.parsing_style.clone(),
             long_only: self.long_only,
         }
+    }
+    /// Create a long option that is required and takes an argument.
+    ///
+    /// * `short_name` - e.g. `"h"` for a `-h` option, or `""` for none
+    /// * `long_name` - e.g. `"help"` for a `--help` option, or `""` for none
+    /// * `desc` - Description for usage help
+    /// * `hint` - Hint that is used in place of the argument in the usage help,
+    ///   e.g. `"FILE"` for a `-o FILE` option
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use getopts::Options;
+    /// # use getopts::Fail;
+    /// let mut opts = Options::new();
+    /// opts.optopt("o", "optional", "optional text option", "TEXT");
+    /// opts.reqopt("m", "mandatory", "madatory text option", "TEXT");
+    ///
+    /// let result = opts.parse(&["--mandatory", "foo"]);
+    /// assert!(result.is_ok());
+    ///
+    /// let result = opts.parse(&["--optional", "foo"]);
+    /// assert!(result.is_err());
+    /// assert_eq!(Fail::OptionMissing("mandatory".to_owned()), result.unwrap_err());
+    /// ```
+    pub fn reqopt(
+        &mut self,
+        short_name: &str,
+        long_name: &str,
+        desc: &str,
+        hint: &str,
+    ) -> &mut Options {
+        validate_names(short_name, long_name);
+        self.grps.push(OptGroup {
+            short_name: short_name.to_string(),
+            long_name: long_name.to_string(),
+            hint: hint.to_string(),
+            desc: desc.to_string(),
+            hasarg: HasArg::Yes,
+            occur: Occur::Req,
+        });
+        self
     }
     /// Derive a formatted message from a set of options.
     pub fn usage(&self, brief: &str) -> String {
