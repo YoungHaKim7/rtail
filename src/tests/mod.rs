@@ -4,6 +4,9 @@ use crate::{
     optgroup::{HasArg, Name, Occur},
     result_error::Opt,
 };
+
+mod unicode_tests;
+
 #[cfg(test)]
 #[test]
 fn test_split_within() {
