@@ -64,8 +64,7 @@ Options:
 
 ```
 cargo nextest run
-   Compiling rtail v0.1.0 (/home/y/my_project/rust_lang/111111ru/9999999/rtail)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.37s
+  
     Starting 17 tests across 1 binary
         FAIL [   4.038s] rtail::bin/rtail tests::test_combined
 
