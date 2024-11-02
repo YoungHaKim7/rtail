@@ -28,7 +28,7 @@
 //! options don't require the space. Everything after double-dash "--"  argument
 //! is considered to be a 'free' argument, even if it starts with dash.
 //!
-//! original code https://github.com/rust-lang/getopts/blob/master/src/lib.rs
+//! original code <https://github.com/rust-lang/getopts/blob/master/src/lib.rs>
 //! # Usage
 //!
 //! This crate is [on crates.io](https://crates.io/crates/getopts) and can be
