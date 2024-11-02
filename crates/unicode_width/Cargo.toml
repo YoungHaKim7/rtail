@@ -1,0 +1,10 @@
+[package]
+name = "unicode_width"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[features]
+cjk = []
+default = ["cjk"]

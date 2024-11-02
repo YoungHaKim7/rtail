@@ -3,6 +3,18 @@ name = "rtail"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = ["crates/unicode_width"]
+resolver = "2"
+
 [dependencies]
 notify = "7.0.0"
-unicode-width = { version = "0.2.0", features = ["cjk"] }
+unicode_width = { path = "crates/unicode_width" }
+
+[features]
+cjk = []
+default = ["cjk"]
+
+# unicode_width = { path = "crates/unicode_width", features = [
+#     "cjk",
+# ], optional = true }

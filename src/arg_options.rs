@@ -95,10 +95,10 @@
 //! }
 //! ```
 
-use std::{ffi::OsStr, iter::repeat};
-use unicode_width::UnicodeWidthStr;
-
 use result_error::{Fail, Matches, Opt, Optval};
+use std::{ffi::OsStr, iter::repeat};
+// use unicode_width::UnicodeWidthStr;
+use unicode_width::UnicodeWidthStr;
 
 use crate::{
     global_fn::{self, each_split_within},
