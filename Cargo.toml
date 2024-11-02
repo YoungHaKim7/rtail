@@ -9,6 +9,7 @@ resolver = "2"
 
 [dependencies]
 notify = "7.0.0"
+tempfile = "3.13.0"
 unicode_width = { path = "crates/unicode_width" }
 
 [features]

@@ -5,6 +5,7 @@ use crate::{
     result_error::Opt,
 };
 
+mod notify;
 mod unicode_tests;
 
 #[cfg(test)]
