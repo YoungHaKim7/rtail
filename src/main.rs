@@ -7,6 +7,7 @@ mod arg_options;
 mod global_fn;
 mod optgroup;
 mod result_error;
+#[allow(unused)]
 mod tests;
 
 #[allow(unused)]

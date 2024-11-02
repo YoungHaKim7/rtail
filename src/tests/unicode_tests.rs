@@ -8,6 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#[allow(unused)]
 use std::{
     fs::File,
     io::{BufRead, BufReader},
@@ -15,6 +16,7 @@ use std::{
 
 use unicode_width::{UnicodeWidthChar, UnicodeWidthStr};
 
+#[allow(unused)]
 macro_rules! assert_width {
     ($s:expr, $nocjk:expr, $cjk:expr $(,)?) => {{
         assert_eq!($s.width(), $nocjk, "{:?} has the wrong width", $s);

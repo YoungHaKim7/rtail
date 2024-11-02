@@ -103,7 +103,7 @@ pub fn tail_file(path: &String, count: u64, fflag: bool) {
     print_result(buf_str);
     if fflag {
         if cfg!(target_os = "windows") {
-            println!("");
+            println!();
         }
         if let Err(why) = tail_file_follow(&mut reader, path, f_size) {
             panic!(
@@ -175,7 +175,8 @@ pub fn validate_names(short_name: &str, long_name: &str) {
 }
 
 pub fn is_arg(arg: &str) -> bool {
-    arg.as_bytes().get(0) == Some(&b'-') && arg.len() > 1
+    // arg.as_bytes().get(0) == Some(&b'-') && arg.len() > 1
+    arg.as_bytes().first() == Some(&b'-') && arg.len() > 1
 }
 
 pub fn find_opt(opts: &[Opt], nm: &Name) -> Option<usize> {

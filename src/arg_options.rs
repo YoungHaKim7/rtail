@@ -361,6 +361,7 @@ impl Options {
     /// assert!(result.is_err());
     /// assert_eq!(Fail::OptionMissing("mandatory".to_owned()), result.unwrap_err());
     /// ```
+    #[allow(unused)]
     pub fn reqopt(
         &mut self,
         short_name: &str,
