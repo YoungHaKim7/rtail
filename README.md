@@ -128,3 +128,84 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
         FAIL [   1.405s] rtail::bin/rtail tests::test_optopt_missing
 error: test run failed
 ```
+
+
+# unicode-width test 추가
+
+```bash
+$ cargo t -p unicode_width
+
+running 1 test
+test tables::tests::test_normalization ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.39s
+
+     Running tests/tests.rs (target/debug/deps/tests-136e14f0684c984e)
+
+running 33 tests
+test ambiguous_line_break ... ok
+test test_ambiguous ... ok
+test test_arabic_lam_alef ... ok
+test test_bad_devanagari ... ok
+test test_buginese_a_i_ya ... ok
+test test_char ... ok
+test test_char2 ... ok
+test test_control_line_break ... ok
+test test_default_ignorable ... ok
+test test_devanagari_caret ... ok
+test test_emoji ... ok
+test test_emoji_modifier ... ok
+test test_emoji_presentation ... ok
+test test_emoji_zwj ... ok
+test test_gcb_prepend ... ok
+test test_hebrew_alef_lamed ... ok
+test test_hieroglyph_format_controls ... ok
+test test_interlinear_annotation_chars ... ok
+test test_jamo ... ok
+test test_khmer_qaa ... ok
+test test_khmer_sign_beyyal ... ok
+test test_lisu_tones ... ok
+test test_marks ... ok
+test test_old_turkic_ligature ... ok
+test test_prepended_concatenation_marks ... ok
+test test_solidus_overlay ... ok
+test test_str ... ok
+test test_text_presentation ... ok
+test test_tifinagh_biconsonants ... ok
+test unicode_12 ... ok
+test emoji_test_file ... ok
+test char_str_consistent ... ok
+test test_khmer_coeng ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+   Doc-tests unicode_width
+
+running 2 tests
+test crates/unicode_width/src/lib.rs - (line 43) ... ok
+test crates/unicode_width/src/lib.rs - (line 21) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.39s
+
+
+$ cargo t
+
+running 15 tests
+test tests::test_free_argument_is_hyphen ... ok
+test tests::test_long_to_short ... ok
+test tests::test_long_name_too_short - should panic ... ok
+test tests::test_optflag ... ok
+test tests::test_optflag_missing ... ok
+test tests::test_optflag_short_arg ... ok
+test tests::test_optopt ... ok
+test tests::test_reqopt ... ok
+test tests::test_split_within ... ok
+test tests::test_undefined_opt_present - should panic ... ok
+test tests::test_usage ... ok
+test tests::test_usage_description_multibyte_handling ... ok
+test tests::test_usage_description_newline_handling ... ok
+test tests::test_usage_description_wrapping ... ok
+test tests::test_usage_multiwidth ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+```
