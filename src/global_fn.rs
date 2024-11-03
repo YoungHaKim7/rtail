@@ -71,7 +71,7 @@ pub fn tail_file(path: &String, count: u64, fflag: bool) {
             }
             current_pos -= 1;
             //println!("{}", current_pos);
-            if current_pos <= 0 {
+            if current_pos == 0 {
                 current_pos = 0;
                 break 'outer;
             }

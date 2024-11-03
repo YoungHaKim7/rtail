@@ -96,8 +96,7 @@
 //! ```
 
 use result_error::{Fail, Matches, Opt, Optval};
-use std::{ffi::OsStr, iter::repeat};
-// use unicode_width::UnicodeWidthStr;
+use std::ffi::OsStr;
 use unicode_width::UnicodeWidthStr;
 
 use crate::{
@@ -287,7 +286,7 @@ impl Options {
                             // FloatingFrees is in use.
                             if let Some(i_arg) = i_arg.take() {
                                 vals[opt_id].push((arg_pos, Optval::Val(i_arg)));
-                            } else if was_long || args.peek().map_or(true, |n| is_arg(&n)) {
+                            } else if was_long || args.peek().map_or(true, |n| is_arg(n)) {
                                 vals[opt_id].push((arg_pos, Optval::Given));
                             } else {
                                 vals[opt_id].push((arg_pos, Optval::Val(args.next().unwrap())));
@@ -401,7 +400,7 @@ impl Options {
 
     /// Derive usage items from a set of options.
     fn usage_items<'a>(&'a self) -> Box<dyn Iterator<Item = String> + 'a> {
-        let desc_sep = format!("\n{}", repeat(" ").take(24).collect::<String>());
+        let desc_sep = format!("\n{}", " ".repeat(24));
 
         let any_short = self.grps.iter().any(|optref| !optref.short_name.is_empty());
 

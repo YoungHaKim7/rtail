@@ -114,7 +114,7 @@ impl Matches {
             opts: self.opts.clone(),
             vals: self.vals.clone(),
             free: self.free.clone(),
-            args_end: self.args_end.clone(),
+            args_end: self.args_end,
         }
     }
 }
