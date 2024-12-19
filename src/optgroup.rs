@@ -1,3 +1,5 @@
+use std::fmt;
+
 use crate::result_error::Opt;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -53,12 +55,12 @@ impl Name {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        match *self {
-            Name::Short(ch) => ch.to_string(),
-            Name::Long(ref s) => s.to_string(),
-        }
-    }
+    // pub fn to_string(&self) -> String {
+    //     match *self {
+    //         Name::Short(ch) => ch.to_string(),
+    //         Name::Long(ref s) => s.to_string(),
+    //     }
+    // }
 
     fn clone(&self) -> Name {
         todo!()
@@ -121,6 +123,15 @@ impl Clone for Name {
         match *self {
             Name::Short(ch) => Name::Short(ch),
             Name::Long(ref s) => Name::Long(s.clone()),
+        }
+    }
+}
+
+impl fmt::Display for Name {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Name::Short(ch) => write!(f, "{}", ch),
+            Name::Long(ref s) => write!(f, "{}", s),
         }
     }
 }
