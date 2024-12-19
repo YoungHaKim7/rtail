@@ -260,11 +260,8 @@ pub fn tail_stdin(count: u64) {
     }
     let mut result = String::new();
     let end_line = line_strs.len() as u64;
-    let start_line = if (end_line) > count {
-        end_line - count
-    } else {
-        0
-    };
+    let start_line = (end_line).saturating_sub(count);
+
     for n in start_line..end_line {
         result += &line_strs[n as usize][..];
         result += "\n";
